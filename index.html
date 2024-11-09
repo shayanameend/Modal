@@ -4,37 +4,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="styles.css">
-
-  <script src="script.js" defer></script>
 </head>
 
 <body>
-  <div class="discount-modal-overlay" id="discountOverlay">
-    <div class="discount-modal" id="discountModal">
-      <div class="discount-close-btn" id="discountCloseBtn">&times;</div>
-      <div class="discount-modal-container">
-        <div class="discount-modal-left">
-          <img src="assets/headphones.jpg" alt="Discount Image" class="discount-img">
-        </div>
-        <div class="discount-modal-right">
-          <h2 class="discount-title">You have unlocked discount gift</h2>
-          <div class="discount-slot-machine">
-            <div class="discount-number-container" id="discountNumbers"></div>
-          </div>
-          <p class="discount-description">
-            <span>
-              This is a limited time offer. Here's your coupon code:
-            </span>
-            <span class="discount-code">RuXVDHMp</span>
-          </p>
-          <button class="discount-copy-btn" id="discountCopyBtn">Copy Code</button>
-          <p class="discount-btn-description">Copy Your Exclusive Discount Code</p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <main>
+    <section>
+      <h2>Hello, World!</h2>
+    </section>
+  </main>
+  <script src="script.js"></script>
+  <script>
+    createDiscountModal({
+      numbers: [5, 10, 15, 20, 25],
+      currencySymbol: '£',
+      title: 'Your Special Discount!',
+      spinDuration: 4000,
+    });
+  </script>
 </body>
 
 </html>
