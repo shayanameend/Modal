@@ -34,7 +34,7 @@ const createDiscountModal = (customConfig = {}) => {
 		closeBtnFontWeight: "400",
 
 		// Container Styling
-		containerPadding: "32px 32px 32px 32px",
+		containerPadding: "0px 0px 0px 0px",
 		containerMargin: "0px 0px 0px 0px",
 		containerBackground: "transparent",
 
@@ -192,10 +192,23 @@ const createDiscountModal = (customConfig = {}) => {
       padding: ${config.containerPadding};
     }
 
+    @media (max-width: 768px) {
+      .discount-modal-container {
+        display: block;
+      }
+    }
+
     .discount-modal-left {
       background-color: ${config.leftContainerBackground};
+      display: none;
       margin: ${config.leftContainerMargin};
       padding: ${config.leftContainerPadding};
+    }
+
+    @media (min-width: 768px) {
+      .discount-modal-left {
+        display: block;
+      }
     }
 
     .discount-modal-right {
