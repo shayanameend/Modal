@@ -4,7 +4,6 @@ const modalOverlay = document.getElementById("discountOverlay");
 const modal = document.getElementById("discountModal");
 const closeBtn = document.getElementById("discountCloseBtn");
 const copyBtn = document.getElementById("discountCopyBtn");
-const copyFeedback = document.getElementById("discountCopyFeedback");
 let isSpinning = false;
 let currentDiscount = null;
 
@@ -78,10 +77,6 @@ const closeDiscountModal = () => {
 const copyDiscountCode = async () => {
 	try {
 		await navigator.clipboard.writeText("RuXVDHMp");
-		copyFeedback.classList.add("show");
-		setTimeout(() => {
-			copyFeedback.classList.remove("show");
-		}, 2000);
 	} catch (err) {
 		console.error("Failed to copy discount code:", err);
 	}
