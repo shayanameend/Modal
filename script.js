@@ -6,6 +6,7 @@ const createDiscountModal = (customConfig = {}) => {
 		currencySymbol: null,
 		title: null,
 		description: null,
+		preCode: null,
 		couponCode: null,
 		buttonText: null,
 		buttonSubtext: null,
@@ -341,6 +342,7 @@ const createDiscountModal = (customConfig = {}) => {
             <p class="discount-description">
               <span>${config.description}</span>
               <br />
+              <span>${config.preCode} </span>
               <span class="discount-code">${config.couponCode}</span>
             </p>
             <button class="discount-copy-btn" id="discountCopyBtn">${config.buttonText}</button>
