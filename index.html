@@ -14,12 +14,15 @@
   </main>
   <script src="script.js"></script>
   <script>
-    createDiscountModal({
+    const modal = createDiscountModal({
       numbers: [5, 10, 15, 20, 25],
       currencySymbol: '£',
       title: 'Your Special Discount!',
       spinDuration: 4000,
     });
+
+    modal.open();
+    modal.close();
   </script>
 </body>
 

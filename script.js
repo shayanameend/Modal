@@ -2,14 +2,14 @@ const createDiscountModal = (customConfig = {}) => {
 	// Default configuration with explicit styling for every element
 	const config = {
 		// Content
-		numbers: [10, 23, 40, 55, 77, 89, 92],
+		numbers: [],
 		currencySymbol: null,
-		title: "You have unlocked discount gift",
-		description: "This is a limited time offer. Here's your coupon code:",
-		couponCode: "RuXVDHMp",
-		buttonText: "Copy Code",
-		buttonSubtext: "Copy Your Exclusive Discount Code",
-		imageUrl: "assets/headphones.jpg",
+		title: null,
+		description: null,
+		couponCode: null,
+		buttonText: null,
+		buttonSubtext: null,
+		imageUrl: null,
 
 		// Modal Styling
 		modalWidth: "85%",
@@ -86,7 +86,7 @@ const createDiscountModal = (customConfig = {}) => {
 		// Code Styling
 		codeBackground: "rgba(0, 0, 0, 0.1)",
 		codePadding: "1px 5px 1px 5px",
-		codeMargin: "0px 0px 0px 4px",
+		codeMargin: "4px 0px 0px 0px",
 		codeFontSize: "12px",
 		codeFontWeight: "400",
 		codeColor: "#333",
@@ -162,31 +162,26 @@ const createDiscountModal = (customConfig = {}) => {
 
     .discount-close-btn {
       align-items: center;
-      background-color: ${config.closeBtnBackground};
       border-radius: 50%;
       color: ${config.closeBtnColor};
       cursor: pointer;
       display: flex;
       font-size: ${config.closeBtnSize};
       font-weight: ${config.closeBtnFontWeight};
-      height: 28px;
+      height: 24px;
       justify-content: center;
       margin: ${config.closeBtnMargin};
       padding: ${config.closeBtnPadding};
       position: absolute;
-      right: 16px;
-      top: 16px;
+      right: 12px;
+      top: 12px;
       transition: background 0.3s ease;
-      width: 28px;
-    }
-
-    .discount-close-btn:hover {
-      background: ${config.closeBtnHoverBackground};
+      width: 24px;
     }
 
     .discount-modal-container {
       background-color: ${config.containerBackground};
-      display: grid;
+      display: ${config.imageUrl ? "grid" : "block"};
       grid-template-columns: 1fr 1fr;
       margin: ${config.containerMargin};
       padding: ${config.containerPadding};
@@ -207,7 +202,7 @@ const createDiscountModal = (customConfig = {}) => {
 
     @media (min-width: 768px) {
       .discount-modal-left {
-        display: block;
+        display: ${config.imageUrl ? "block" : "none"};
       }
     }
 
@@ -326,7 +321,6 @@ const createDiscountModal = (customConfig = {}) => {
     }
   `;
 
-	// Rest of the code remains unchanged
 	const styleSheet = document.createElement("style");
 	styleSheet.textContent = styles;
 	document.head.appendChild(styleSheet);
@@ -346,6 +340,7 @@ const createDiscountModal = (customConfig = {}) => {
             </div>
             <p class="discount-description">
               <span>${config.description}</span>
+              <br />
               <span class="discount-code">${config.couponCode}</span>
             </p>
             <button class="discount-copy-btn" id="discountCopyBtn">${config.buttonText}</button>
@@ -364,7 +359,6 @@ const createDiscountModal = (customConfig = {}) => {
 	const copyBtn = document.getElementById("discountCopyBtn");
 	const numberContainer = document.getElementById("discountNumbers");
 	let isSpinning = false;
-	let currentDiscount = null;
 
 	const createDiscountNumbers = () => {
 		numberContainer.innerHTML = "";
@@ -410,7 +404,6 @@ const createDiscountModal = (customConfig = {}) => {
 			} else {
 				const randomIndex = Math.floor(Math.random() * config.numbers.length);
 				const finalPosition = -randomIndex * 100;
-				currentDiscount = config.numbers[randomIndex];
 
 				numberContainer.style.transition =
 					"transform 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)";
@@ -440,6 +433,15 @@ const createDiscountModal = (customConfig = {}) => {
 		}
 	};
 
+	const openDiscountModal = () => {
+		createDiscountNumbers();
+		setTimeout(() => {
+			modalOverlay.classList.add("active");
+			modal.classList.add("active");
+			setTimeout(spinDiscountWheel, config.spinDelay);
+		}, config.initialDelay);
+	};
+
 	closeBtn.addEventListener("click", closeDiscountModal);
 	copyBtn.addEventListener("click", copyDiscountCode);
 	modalOverlay.addEventListener("click", (e) => {
@@ -448,10 +450,8 @@ const createDiscountModal = (customConfig = {}) => {
 		}
 	});
 
-	createDiscountNumbers();
-	setTimeout(() => {
-		modalOverlay.classList.add("active");
-		modal.classList.add("active");
-		setTimeout(spinDiscountWheel, config.spinDelay);
-	}, config.initialDelay);
+	return {
+		open: openDiscountModal,
+		close: closeDiscountModal,
+	};
 };
