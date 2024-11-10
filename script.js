@@ -2,6 +2,7 @@ const createDiscountModal = (customConfig = {}) => {
 	// Default configuration with explicit styling for every element
 	const config = {
 		// Content
+		initialValue: null,
 		numbers: [],
 		currencySymbol: null,
 		title: null,
@@ -368,14 +369,16 @@ const createDiscountModal = (customConfig = {}) => {
 			const numberDiv = document.createElement("div");
 			numberDiv.className = "discount-number";
 			numberDiv.textContent = config.currencySymbol
-				? `${config.currencySymbol}${num}`
-				: `${num}%`;
+				? `${config.currencySymbol}${config.initialValue || num}`
+				: `${config.initialValue || num}%`;
 			numberDiv.style.transform = `translateY(${index * 100}px)`;
 			numberContainer.appendChild(numberDiv);
 		});
 	};
 
 	const spinDiscountWheel = () => {
+		if (config.initialValue) return;
+
 		if (isSpinning) return;
 		isSpinning = true;
 
@@ -423,8 +426,9 @@ const createDiscountModal = (customConfig = {}) => {
 	};
 
 	const closeDiscountModal = () => {
-		modalOverlay.classList.remove("active");
 		modal.classList.remove("active");
+		modalOverlay.classList.remove("active");
+		modalOverlay.style.zIndex = "-1";
 	};
 
 	const copyDiscountCode = async () => {
@@ -438,6 +442,7 @@ const createDiscountModal = (customConfig = {}) => {
 	const openDiscountModal = () => {
 		createDiscountNumbers();
 		setTimeout(() => {
+			modalOverlay.style.zIndex = "9999";
 			modalOverlay.classList.add("active");
 			modal.classList.add("active");
 			setTimeout(spinDiscountWheel, config.spinDelay);
@@ -451,6 +456,8 @@ const createDiscountModal = (customConfig = {}) => {
 			closeDiscountModal();
 		}
 	});
+
+	openDiscountModal();
 
 	return {
 		open: openDiscountModal,

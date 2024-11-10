@@ -10,11 +10,14 @@
   <main>
     <section>
       <h2>Hello, World!</h2>
+      <button id="open-modal">Open Modal</button>
+      <button id="close-modal">Close Modal</button>
     </section>
   </main>
   <script src="script.js"></script>
   <script>
     const modal = createDiscountModal({
+      // initialValue: 10,
       numbers: [5, 10, 15, 20, 25],
       currencySymbol: '£',
       title: 'Your Special Discount!',
@@ -26,8 +29,13 @@
       spinDuration: 4000,
     });
 
-    modal.open();
-    modal.close();
+    document.getElementById('open-modal').addEventListener('click', () => {
+      modal.open();
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+      modal.close();
+    });
   </script>
 </body>
 
